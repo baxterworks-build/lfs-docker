@@ -1,14 +1,31 @@
 #!/bin/bash
 set -eou pipefail
-mkdir /lfs
+set +h
+
+
 export LFS=/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
+export PATH=$LFS/tools/bin:/bin:/usr/bin
 export GNU=https://ftpmirror.gnu.org/gnu
 
 apt update; apt -y install --no-install-recommends xz-utils gcc g++ bison make curl ca-certificates
 
+mkdir /lfs
 mkdir $LFS/sources
 pushd $LFS/sources
+
+curl -L $GNU/binutils/binutils-2.35.tar.xz | tar -Jxf -
+mkdir binutils-2.35/build
+pushd binutils-2.35/build
+
+../configure --prefix=$LFS/tools       \
+             --with-sysroot=$LFS        \
+             --target=$LFS_TGT          \
+             --disable-nls              \
+             --disable-werror
+make -j24
+make install
+popd
 
 curl -L $GNU/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz | tar -Jxf -
 pushd gcc-10.2.0
@@ -45,4 +62,6 @@ pushd build
     --disable-libstdcxx                            \
     --enable-languages=c,c++
 
-make -j24
+make -j24 || true #don't bail out here if we fail
+
+find -name config.log
