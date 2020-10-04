@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eou pipefail
 mkdir /lfs
 export LFS=/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
@@ -9,17 +10,15 @@ apt update; apt -y install --no-install-recommends xz-utils gcc g++ bison make c
 mkdir $LFS/sources
 pushd $LFS/sources
 
+curl -L $GNU/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz | tar -Jxf -
+pushd gcc-10.2.0
+
 curl -L $GNU/mpfr/mpfr-4.1.0.tar.xz | tar -Jxf -
 curl -L $GNU/gmp/gmp-6.2.0.tar.xz | tar -Jxf - 
 curl -L $GNU/mpc/mpc-1.1.0.tar.xz | tar -Jxf -
-curl -L $GNU/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz | tar -Jxf -
-
-pushd gcc*
 
 mv -v mpfr-4.1.0 mpfr
-tar -xf ../gmp-6.2.0.tar.xz
 mv -v gmp-6.2.0 gmp
-tar -xf ../mpc-1.1.0.tar.gz
 mv -v mpc-1.1.0 mpc
 
 mkdir build
