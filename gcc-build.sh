@@ -4,7 +4,7 @@ export LFS=/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
 export GNU=https://ftpmirror.gnu.org/gnu
 
-apt update; apt -y install --no-install-recommends gcc g++ bison make curl 
+apt update; apt -y install --no-install-recommends gcc g++ bison make curl ca-certificates
 
 mkdir $LFS/sources
 pushd $LFS/sources
