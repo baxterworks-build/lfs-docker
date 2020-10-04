@@ -6,7 +6,8 @@ set +h
 export LFS=/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
 export PATH=$LFS/tools/bin:/bin:/usr/bin
-export GNU=https://ftpmirror.gnu.org/gnu
+#export GNU=https://ftpmirror.gnu.org/gnu
+export GNU=http://gnu.mirror.constant.com
 
 apt update; apt -y install --no-install-recommends xz-utils gcc g++ bison make curl ca-certificates
 
@@ -22,17 +23,17 @@ pushd binutils-2.35/build
              --with-sysroot=$LFS        \
              --target=$LFS_TGT          \
              --disable-nls              \
-             --disable-werror
-make -j24
-make install
+             --disable-werror &> configure-binutils-output.log
+make -j24 &> make-binutils-output.log
+make install > /dev/null
 popd
 
-curl -L $GNU/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz | tar -Jxf -
+curl -sL $GNU/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz | tar -Jxf -
 pushd gcc-10.2.0
 
-curl -L $GNU/mpfr/mpfr-4.1.0.tar.xz | tar -Jxf -
-curl -L $GNU/gmp/gmp-6.2.0.tar.xz | tar -Jxf - 
-curl -L $GNU/mpc/mpc-1.2.0.tar.gz | tar -zxf -
+curl -sL $GNU/mpfr/mpfr-4.1.0.tar.xz | tar -Jxf -
+curl -sL $GNU/gmp/gmp-6.2.0.tar.xz | tar -Jxf -
+curl -sL $GNU/mpc/mpc-1.2.0.tar.gz | tar -zxf -
 
 mv -v mpfr-4.1.0 mpfr
 mv -v gmp-6.2.0 gmp
@@ -60,8 +61,8 @@ pushd build
     --disable-libssp                               \
     --disable-libvtv                               \
     --disable-libstdcxx                            \
-    --enable-languages=c,c++
+    --enable-languages=c,c++ &> configure-gcc-output.log
 
-make -j24 || true #don't bail out here if we fail
+make -j24 &> gcc-build-output.log
 
-find -name config.log
+
