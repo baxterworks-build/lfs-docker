@@ -15,11 +15,11 @@ pushd gcc-10.2.0
 
 curl -L $GNU/mpfr/mpfr-4.1.0.tar.xz | tar -Jxf -
 curl -L $GNU/gmp/gmp-6.2.0.tar.xz | tar -Jxf - 
-curl -L $GNU/mpc/mpc-1.1.0.tar.xz | tar -Jxf -
+curl -L $GNU/mpc/mpc-1.2.0.tar.gz | tar -zxf -
 
 mv -v mpfr-4.1.0 mpfr
 mv -v gmp-6.2.0 gmp
-mv -v mpc-1.1.0 mpc
+mv -v mpc-1.2.0 mpc
 
 mkdir build
 pushd build
