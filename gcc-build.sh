@@ -27,7 +27,7 @@ echo "Installing host (Debian) dependencies, stand by"
 echo "Host is ready, hold on to your butts"
 echo
 
-mkdir /lfs
+mkdir $LFS
 mkdir $LFS/sources
 pushd $LFS/sources
 
