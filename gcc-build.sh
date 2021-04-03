@@ -15,14 +15,24 @@ export MPFR_VERSION=4.1.0
 export GMP_VERSION=6.2.1
 export MPC_VERSION=1.2.1
 
+export BINUTILS_URL=$GNU/binutils/binutils-$BINUTILS_VERSION.tar.xz
+export MPFR_URL=$GNU/mpfr/mpfr-$MPFR_VERSION.tar.xz
+export GMP_URL=$GNU/gmp/gmp-$GMP_VERSION.tar.xz
+export MPC_URL=$GNU/mpc/mpc-$MPC_VERSION.tar.gz
+export GCC_URL=$GNU/gcc/gcc-${GCC_VERSION}/gcc-$GCC_VERSION.tar.xz
 
-apt update; apt -y install --no-install-recommends xz-utils gcc g++ bison make curl ca-certificates
+echo "Installing host (Debian) dependencies, stand by"
+(apt update; apt -y install --no-install-recommends xz-utils gcc g++ bison make curl ca-certificates) &> /dev/null
+
+echo "Host is ready, hold on to your butts"
+echo
 
 mkdir /lfs
 mkdir $LFS/sources
 pushd $LFS/sources
 
-curl -L $GNU/binutils/binutils-$BINUTILS_VERSION.tar.xz | tar -Jxf -
+echo "binutils: $BINUTILS_URL"
+curl -L $BINUTILS_URL | tar -Jxf -
 mkdir binutils-$BINUTILS_VERSION/build
 pushd binutils-$BINUTILS_VERSION/build
 
@@ -35,12 +45,13 @@ make -j24 &> make-binutils-output.log
 make install > /dev/null
 popd
 
-curl -sL $GNU/gcc/gcc-${GCC_VERSION}/gcc-$GCC_VERSION.tar.xz | tar -Jxf -
+echo "gcc: $GCC_URL"
+curl -sL $GCC_URL | tar -Jxf -
 pushd gcc-$GCC_VERSION
 
-curl -sL $GNU/mpfr/mpfr-$MPFR_VERSION.tar.xz | tar -Jxf -
-curl -sL $GNU/gmp/gmp-$GMP_VERSION.tar.xz | tar -Jxf -
-curl -sL $GNU/mpc/mpc-$MPC_VERSION.tar.gz | tar -zxf -
+curl -sL $MPFR_URL | tar -Jxf -
+curl -sL $GMP_URL | tar -Jxf -
+curl -sL $MPC_URL | tar -zxf -
 
 mv -v mpfr-$MPFR_VERSION mpfr
 mv -v gmp-$GMP_VERSION gmp
