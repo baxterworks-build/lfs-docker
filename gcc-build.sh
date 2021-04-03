@@ -36,13 +36,12 @@ $CURL $BINUTILS_URL | tar -Jxf -
 mkdir binutils-$BINUTILS_VERSION/build
 pushd binutils-$BINUTILS_VERSION/build
 
-../configure --prefix=$LFS/tools       \
+echo "1 SBU is?"
+time { ../configure --prefix=$LFS/tools       \
              --with-sysroot=$LFS        \
              --target=$LFS_TGT          \
              --disable-nls              \
-             --disable-werror &> configure-binutils-output.log
-make -j24 &> make-binutils-output.log
-make install > /dev/null
+             --disable-werror &> configure-binutils-output.log && make -j24 &> make-binutils-output.log && make install > /dev/null };
 popd
 
 echo "gcc: $GCC_URL"
