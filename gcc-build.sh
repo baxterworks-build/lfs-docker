@@ -2,7 +2,7 @@
 set -eou pipefail
 set +h
 
-
+export CURL="curl -L --silent --show-error --fail "
 export LFS=/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
 export PATH=$LFS/tools/bin:/bin:/usr/bin
@@ -32,7 +32,7 @@ mkdir $LFS/sources
 pushd $LFS/sources
 
 echo "binutils: $BINUTILS_URL"
-curl -L $BINUTILS_URL | tar -Jxf -
+$CURL $BINUTILS_URL | tar -Jxf -
 mkdir binutils-$BINUTILS_VERSION/build
 pushd binutils-$BINUTILS_VERSION/build
 
@@ -46,12 +46,12 @@ make install > /dev/null
 popd
 
 echo "gcc: $GCC_URL"
-curl -sL $GCC_URL | tar -Jxf -
+$CURL $GCC_URL | tar -Jxf -
 pushd gcc-$GCC_VERSION
 
-curl -sL $MPFR_URL | tar -Jxf -
-curl -sL $GMP_URL | tar -Jxf -
-curl -sL $MPC_URL | tar -zxf -
+$CURL $MPFR_URL | tar -Jxf -
+$CURL $GMP_URL | tar -Jxf -
+$CURL $MPC_URL | tar -zxf -
 
 mv -v mpfr-$MPFR_VERSION mpfr
 mv -v gmp-$GMP_VERSION gmp
