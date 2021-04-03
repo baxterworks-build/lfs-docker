@@ -10,7 +10,7 @@ export PATH=$LFS/tools/bin:/bin:/usr/bin
 export GNU=http://gnu.mirror.constant.com
 
 export BINUTILS_VERSION=2.36.1
-export GCC_VERSION=10.2.1
+export GCC_VERSION=10.2.0
 export MPFR_VERSION=4.1.0
 export GMP_VERSION=6.2.1
 export MPC_VERSION=1.2.1
