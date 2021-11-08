@@ -1,14 +1,15 @@
 #!/bin/bash
 set -eou pipefail
 set +h
+set -x
 
 export CURL="curl -L --silent --show-error --fail "
-export LFS=/lfs
+export LFS=$PWD/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
 export PATH=$LFS/tools/bin:/bin:/usr/bin
 #export GNU=https://ftpmirror.gnu.org/gnu
-export GNU=http://gnu.mirror.constant.com
-
+export GNU=${$GNU:-"http://gnu.mirror.constant.com"}
+export LOGS=${$LOGS:-$LFS/logs}
 export BINUTILS_VERSION=2.36.1
 export GCC_VERSION=10.2.0
 export MPFR_VERSION=4.1.0
