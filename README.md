@@ -1,2 +1,1 @@
-# gcc-drone-test
-lfs testing
+# LFS in a docker container

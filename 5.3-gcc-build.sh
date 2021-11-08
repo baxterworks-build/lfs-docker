@@ -1,51 +1,28 @@
 #!/bin/bash
-set -eou pipefail
-set +h
-set -x
-
-export CURL="curl -L --silent --show-error --fail "
-export LFS=$PWD/lfs
-export LFS_TGT=$(uname -m)-lfs-linux-gnu
-export PATH=$LFS/tools/bin:/bin:/usr/bin
-#export GNU=https://ftpmirror.gnu.org/gnu
-export GNU=${$GNU:-"http://gnu.mirror.constant.com"}
-export LOGS=${$LOGS:-$LFS/logs}
-export BINUTILS_VERSION=2.36.1
-export GCC_VERSION=10.2.0
-export MPFR_VERSION=4.1.0
-export GMP_VERSION=6.2.1
-export MPC_VERSION=1.2.1
-
-export BINUTILS_URL=$GNU/binutils/binutils-$BINUTILS_VERSION.tar.xz
-export MPFR_URL=$GNU/mpfr/mpfr-$MPFR_VERSION.tar.xz
-export GMP_URL=$GNU/gmp/gmp-$GMP_VERSION.tar.xz
-export MPC_URL=$GNU/mpc/mpc-$MPC_VERSION.tar.gz
-export GCC_URL=$GNU/gcc/gcc-${GCC_VERSION}/gcc-$GCC_VERSION.tar.xz
-
-echo "Installing host (Debian) dependencies, stand by"
-(apt update; apt -y install --no-install-recommends xz-utils gcc g++ bison make curl ca-certificates) &> /dev/null
-
-echo "Host is ready, hold on to your butts"
-echo
-
-mkdir $LFS
-mkdir $LFS/sources
+#https://www.linuxfromscratch.org/lfs/view/development/chapter05/gcc-pass1.html
+source environment.sh
+mkdir -p $LFS
+mkdir -p $LFS/sources
+mkdir -p $LOGS
 pushd $LFS/sources
 
 echo "binutils: $BINUTILS_URL"
 $CURL $BINUTILS_URL | tar -Jxf -
 mkdir binutils-$BINUTILS_VERSION/build
-pushd binutils-$BINUTILS_VERSION/build
+pushd binutils-$BINUTILS_VERSION
+ls -la $LFS_PATCHES/binutils*
+patch -p1 < $LFS_PATCHES/binutils*
+popd
 
+pushd binutils-$BINUTILS_VERSION/build
 echo "1 SBU is?"
 time { ../configure --prefix=$LFS/tools       \
              --with-sysroot=$LFS        \
              --target=$LFS_TGT          \
              --disable-nls              \
-             --disable-werror &> configure-binutils-output.log && make -j24 &> make-binutils-output.log && make install > /dev/null; }
+             --disable-werror &> $LOGS/binutils.configure.log && make -j$JOBS &> $LOGS/binutils.make.log && make install > /dev/null; }
 popd
 
-echo "gcc: $GCC_URL"
 $CURL $GCC_URL | tar -Jxf -
 pushd gcc-$GCC_VERSION
 
@@ -79,8 +56,14 @@ pushd build
     --disable-libssp                               \
     --disable-libvtv                               \
     --disable-libstdcxx                            \
-    --enable-languages=c,c++ &> configure-gcc-output.log
+    --enable-languages=c,c++ &> $LOGS/gcc.configure.log
 
-make -j &> gcc-build-output.log
-
+make -j$JOBS &> $LOGS/gcc.make.log || true
+make install &> $LOGS/gcc.install.log || true
+pushd ..
+set -x
+cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
+  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
+set +x
+popd
 
