@@ -1,8 +1,0 @@
-kind: pipeline
-name: default
-
-steps:
-- name: Build GCC via script
-  image: debian
-  commands:
-  - ./gcc-build.sh
