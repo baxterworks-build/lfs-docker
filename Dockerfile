@@ -14,5 +14,5 @@ COPY *.sh /lfs/
 COPY patches /lfs/patches
 RUN ./5.3-gcc-build.sh
 
-FROM s5.3-gcc-pass-1 AS 5.5-glibc
+#FROM s5.3-gcc-pass-1 AS s5.5-glibc
 
