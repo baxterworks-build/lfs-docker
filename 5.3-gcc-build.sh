@@ -63,7 +63,14 @@ make install &> $LOGS/gcc.install.log || true
 pushd ..
 set -x
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
-  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
+  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h || true
+pwd
+ls
+ls ..
+ls gcc
+echo `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`
+ls -R `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`
+
 set +x
 popd
 
