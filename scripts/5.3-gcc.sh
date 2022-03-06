@@ -1,13 +1,7 @@
 #!/bin/bash
 #https://www.linuxfromscratch.org/lfs/view/development/chapter05/gcc-pass1.html
 source environment.sh
-
-$CURL $GCC_URL | tar -Jxf -
-pushd gcc-$GCC_VERSION
-
-
-mkdir build
-pushd build
+cd $LFS/sources/gcc* && mkdir build && cd build
 
 ../configure                                       \
     --target=$LFS_TGT                              \
@@ -28,21 +22,17 @@ pushd build
     --disable-libssp                               \
     --disable-libvtv                               \
     --disable-libstdcxx                            \
-    --enable-languages=c,c++ &> $LOGS/gcc.configure.log
+    --enable-languages=c,c++ #&> $LOGS/gcc.configure.log
 
-make -j$JOBS &> $LOGS/gcc.make.log || true
-make install &> $LOGS/gcc.install.log || true
-pushd ..
-set -x
-cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
-  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h || true
-pwd
-ls
-ls ..
-ls gcc
-echo `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`
-ls -R `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`
+#TODO: configure: error: cannot compute suffix of object files: cannot compile
 
-set +x
-popd
+make -j$JOBS || true #&> $LOGS/gcc.make.log
+
+#make install #&> $LOGS/gcc.install.log
+
+#cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
+#  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
+
+
+
 

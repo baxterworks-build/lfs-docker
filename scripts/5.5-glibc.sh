@@ -1,10 +1,25 @@
 #!/bin/bash
-#https://www.linuxfromscratch.org/lfs/view/development/chapter05/gcc-pass1.html
-#https://www.linuxfromscratch.org/lfs/view/development/chapter05/linux-headers.html
-#https://www.linuxfromscratch.org/lfs/view/development/chapter05/glibc.html
-
+#https://www.linuxfromscratch.org/lfs/downloads/development/LFS-BOOK-r11.1-20-NOCHUNKS.html#ch-tools-glibc
 source environment.sh
-pushd $LFS/sources
+pushd $LFS/sources/glibc-*
 
-$CURL $KERNEL_URL | tar -Jxf -
-#pushd linux-$LINUX_VERSION
+#TODO: I assume uname -m returns aarch64 and breaks this switch on aarch64
+case $(uname -m) in
+    i?86)   ln -sfv ld-linux.so.2 $LFS/lib/ld-lsb.so.3
+    ;;
+    x86_64) ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64
+            ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64/ld-lsb-x86-64.so.3
+    ;;
+esac
+
+patch -Np1 -i $LFS/patches/glibc-2.35-fhs-1.patch
+mkdir -v build && cd build
+
+echo "rootsbindir=/usr/sbin" > configparms
+../configure                             \
+      --prefix=/usr                      \
+      --host=$LFS_TGT                    \
+      --build=$(../scripts/config.guess) \
+      --enable-kernel=3.2                \
+      --with-headers=$LFS/usr/include    \
+      libc_cv_slibdir=/usr/lib &> glibc.configure.log && make -j$(nproc) &> glibc.make.log && make install

@@ -1,0 +1,10 @@
+ARG PROJECT
+ARG PROJECT_ARCH
+FROM $PROJECT-$PROJECT_ARCH-debian-builder
+ARG GNU=https://ftpmirror.gnu.org/
+ENV GNU=$GNU
+
+WORKDIR /lfs
+COPY scripts/environment.sh /lfs/
+COPY scripts/5.3-gcc.sh /lfs/
+RUN ./5.3-gcc.sh
