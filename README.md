@@ -7,7 +7,12 @@ Based on https://www.linuxfromscratch.org/lfs/downloads/development/LFS-BOOK-r11
 * Step 5.4.1, kernel headers are done as part of my prerequisites script so I'm not copying an entire Linux source tree every time I take the /lfs path between containers
 
 
+# Troubleshooting log
+gcc/libgcc: configure: error: cannot compute suffix of object files: cannot compile
+If gcc can't find binutils, things get very wonky!
+*Assuming* this was a missing `/lfs/tools/bin/as` binary or similar
+
 # todo
-scripts/0-prereqs.sh:25: use the $LFS variable consistently, use absolute paths everywhere
-scripts/5.3-gcc.sh:27: configure: error: cannot compute suffix of object files: cannot compile
+scripts/0-prereqs.sh:25: use the $LFS variable consistently, use absolute paths everywhere 
 scripts/5.5-glibc.sh:6: I assume uname -m returns aarch64 and breaks this switch on aarch64
+

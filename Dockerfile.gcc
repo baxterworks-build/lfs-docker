@@ -1,8 +1,9 @@
 ARG PROJECT
 ARG PROJECT_ARCH
+
+FROM $PROJECT-$PROJECT_ARCH-binutils as binutils
 FROM $PROJECT-$PROJECT_ARCH-debian-builder
-ARG GNU=https://ftpmirror.gnu.org/
-ENV GNU=$GNU
+COPY --from=binutils /lfs/tools /lfs/tools
 
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/

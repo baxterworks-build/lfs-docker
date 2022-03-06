@@ -22,16 +22,15 @@ cd $LFS/sources/gcc* && mkdir build && cd build
     --disable-libssp                               \
     --disable-libvtv                               \
     --disable-libstdcxx                            \
-    --enable-languages=c,c++ #&> $LOGS/gcc.configure.log
+    --enable-languages=c,c++ &> $LOGS/gcc.configure.log
 
-#TODO: configure: error: cannot compute suffix of object files: cannot compile
 
-make -j$JOBS || true #&> $LOGS/gcc.make.log
 
-#make install #&> $LOGS/gcc.install.log
+make -j$JOBS &> $LOGS/gcc.make.log
+make install &> $LOGS/gcc.install.log
 
-#cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
-#  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
+cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
+`dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
 
 
 
