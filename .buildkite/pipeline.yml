@@ -1,3 +1,4 @@
 steps:
   - commands:
-    - ./buildme.sh
+    - make get-logs
+  - artifact_paths: output/

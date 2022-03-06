@@ -18,7 +18,7 @@ export GMP_VERSION=6.2.1
 export MPC_VERSION=1.2.1
 export LINUX_VERSION=5.14.15
 
-export GNU_MIRROR=${GNU_MIRROR:-"http://gnu.mirror.constant.com"}
+export GNU_MIRROR=${GNU_MIRROR:-"https://mirror.aarnet.edu.au/pub/gnu/"}
 export KERNEL_MIRROR=http://cdn.kernel.org/
 export BINUTILS_URL=$GNU_MIRROR/binutils/binutils-$BINUTILS_VERSION.tar.xz
 export MPFR_URL=$GNU_MIRROR/mpfr/mpfr-$MPFR_VERSION.tar.xz

@@ -1,0 +1,12 @@
+ARG PROJECT
+ARG PROJECT_ARCH
+FROM $PROJECT-$PROJECT_ARCH-debian-builder
+ARG GNU=https://ftpmirror.gnu.org/
+ENV GNU=$GNU
+
+
+WORKDIR /lfs
+COPY scripts/environment.sh /lfs/
+COPY scripts/5.2-binutils.sh /lfs/
+COPY patches/binutils* /lfs/patches/
+RUN ./5.2-binutils.sh

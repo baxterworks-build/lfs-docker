@@ -5,13 +5,6 @@ source environment.sh
 $CURL $GCC_URL | tar -Jxf -
 pushd gcc-$GCC_VERSION
 
-$CURL $MPFR_URL | tar -Jxf -
-$CURL $GMP_URL | tar -Jxf -
-$CURL $MPC_URL | tar -zxf -
-
-mv -v mpfr-$MPFR_VERSION mpfr
-mv -v gmp-$GMP_VERSION gmp
-mv -v mpc-$MPC_VERSION mpc
 
 mkdir build
 pushd build

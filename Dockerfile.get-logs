@@ -1,0 +1,8 @@
+ARG PROJECT
+ARG PROJECT_ARCH
+FROM $PROJECT-$PROJECT_ARCH-debian-builder as debian-builder
+FROM $PROJECT-$PROJECT_ARCH-binutils as binutils
+FROM debian:sid
+COPY --from=binutils /lfs/logs/ /lfs/logs/
+COPY --from=debian-builder /lfs/logs/ /lfs/logs/
+
