@@ -30,11 +30,11 @@ gcc: binutils .gcc.stamp
 
 glibc: gcc .glibc.stamp
 
-get-logs: binutils .get-logs.stamp
+get-logs: gcc .get-logs.stamp
 	docker run --rm --mount type=bind,source=$(shell pwd)/output/,target=/output $(PROJECT)-$(PROJECT_ARCH)-$@ cp -Rv /lfs/logs/ /output
 
 
-clean: 
+clean:
 	@rm -v $(wildcard .*.stamp)
 
 todo:
