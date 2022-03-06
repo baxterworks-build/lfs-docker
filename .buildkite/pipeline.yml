@@ -1,4 +1,4 @@
 steps:
   - commands:
     - make get-logs
-  - artifact_paths: output/
+      artifact_paths: output/
