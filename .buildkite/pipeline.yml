@@ -1,3 +1,3 @@
 steps:
   - command: make get-logs
-    artifact_paths: output/logs/
+    artifact_paths: output/logs/*.log
