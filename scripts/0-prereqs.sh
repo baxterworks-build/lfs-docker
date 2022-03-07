@@ -17,7 +17,7 @@ for u in $BINUTILS_URL $MPFR_URL $GMP_URL $MPC_URL $GCC_URL; do
     tar axf $t
     rm -v $t
 done;
-
+#TODO: move the sources to a different container? gcc is running me out of drive space after ~5 builds
 cd /lfs/sources/gcc-$GCC_VERSION
 mv -v ../mpfr-$MPFR_VERSION mpfr
 mv -v ../gmp-$GMP_VERSION gmp
