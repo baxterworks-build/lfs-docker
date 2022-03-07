@@ -6,7 +6,11 @@ mkdir -pv /lfs/patches
 mkdir -pv /lfs/logs
 mkdir -pv /lfs/sources
 
-dpkg --get-selections >> $LOGS/debian-builder-dpkg-selections.log
+#https://askubuntu.com/questions/347555/how-do-i-list-all-installed-packages-with-specific-version-numbers
+#https://askubuntu.com/questions/538261/how-to-tweak-dpkg-l-output
+#https://unix.stackexchange.com/questions/20536/reformatting-output-with-aligned-columns
+#tl;dr don't use dpkg --get-selections, use dpkg-query
+dpkg-query -W -f='${binary:Package}\t${Version}\n' | column -t > $LOGS/debian-packages.log
 cat /etc/apt/sources.list >> $LOGS/debian-builder-apt-sources.log 
 cat /etc/apt/sources.list.d/* >> $LOGS/debian-builder-apt-sources.log || true 
 

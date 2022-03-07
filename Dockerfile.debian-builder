@@ -4,5 +4,6 @@ ENV GNU=$GNU
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/
 COPY scripts/0-prereqs.sh /lfs/
-RUN apt update; apt -y install --no-install-recommends xz-utils gcc g++ bison make curl ca-certificates patch less texinfo
+#Yep, I'm installing bsdextrautils just for 'column'
+RUN apt update; apt -y install --no-install-recommends bsdextrautils xz-utils gcc g++ bison make curl ca-certificates patch less texinfo
 RUN ./0-prereqs.sh

@@ -19,8 +19,10 @@ endef
 #https://stackoverflow.com/a/39124162/229631
 word-dot = $(word $2,$(subst ., ,$1))
 
-.DEFAULT_GOAL = lfs
+.DEFAULT_GOAL = all
 .PHONY: clean todo %.log
+
+all: binutils gcc glibc
 
 #https://stackoverflow.com/a/8822668/229631
 .%.stamp:

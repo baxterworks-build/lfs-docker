@@ -1,5 +1,6 @@
 #!/bin/bash
 source environment.sh
+#TODO: remove pushd/popd
 pushd $LFS/sources
 mkdir binutils-$BINUTILS_VERSION/build
 pushd binutils-$BINUTILS_VERSION
@@ -18,3 +19,5 @@ time {
              --disable-werror &> $LOGS/binutils.configure.log && ( make -j$(nproc) && make install ) &> $LOGS/binutils.make.log ; } || true
 popd
 popd
+
+sha256sum /lfs/tools/bin/* > $LOGS/binutils.sha256sum

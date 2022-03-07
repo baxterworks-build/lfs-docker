@@ -3,7 +3,7 @@ steps:
     commands: 
       - "make debian-builder"
       - "make debian-builder.log"
-    artifact_paths: output/logs/*.log
+    artifact_paths: output/logs/gcc*
   - label: "Build gcc"
     commands: 
       - "make gcc"

@@ -34,6 +34,6 @@ cd $LFS/sources/gcc*
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
 `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h || true
 
-
+sha256sum /lfs/tools/bin/x86_64-lfs-linux-gnu-{gcc*,g++*,c++*} > $LOGS/gcc.sha256sum
 
 

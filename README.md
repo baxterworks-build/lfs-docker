@@ -16,3 +16,15 @@ buildkite:  Error: Failed to remove "/var/lib/buildkite-agent/builds/debian-1/ba
 "Fixed" by using userns remapping and mapping the buildkite agent (uid/gid 998) to the same ID inside the container
 
 docker on btrfs: failing on copy step, "solved" by changing VM back to ext4 with overlay driver... revisit this as it's a bad solution. Perhaps something changed in kernel 5.17? https://github.com/moby/moby/issues/37965
+
+# todo
+* scripts/5.2-binutils.sh:3: remove pushd/popd
+
+* scripts/0-prereqs.sh:25: move the sources to a different container? gcc is running me out of drive space after ~5 builds
+
+* scripts/0-prereqs.sh:33: use the $LFS variable consistently, use absolute paths everywhere
+
+* scripts/5.5-glibc.sh:6: I assume uname -m returns aarch64 and breaks this switch on aarch64
+
+* .buildkite/pipeline.yml:13: put logs in different paths & change artifact_paths so there's no duplicate logs
+
