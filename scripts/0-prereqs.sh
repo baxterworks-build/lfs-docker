@@ -7,7 +7,8 @@ mkdir -pv /lfs/logs
 mkdir -pv /lfs/sources
 
 dpkg --get-selections >> $LOGS/debian-builder-dpkg-selections.log
-cat /etc/apt/sources.list /etc/apt/sources.list.d/* >> $LOGS/debian-builder-apt-sources.log
+cat /etc/apt/sources.list >> $LOGS/debian-builder-apt-sources.log 
+/etc/apt/sources.list.d/* >> $LOGS/debian-builder-apt-sources.log || true 
 
 cd /lfs/sources
 
