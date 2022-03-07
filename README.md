@@ -12,10 +12,10 @@ gcc/libgcc: configure: error: cannot compute suffix of object files: cannot comp
 If gcc can't find binutils, things get very wonky!
 *Assuming* this was a missing `/lfs/tools/bin/as` binary or similar
 
-
-
 # todo
-* scripts/0-prereqs.sh:25: use the $LFS variable consistently, use absolute paths everywhere
+* scripts/0-prereqs.sh:29: use the $LFS variable consistently, use absolute paths everywhere
 
 * scripts/5.5-glibc.sh:6: I assume uname -m returns aarch64 and breaks this switch on aarch64
+
+* .buildkite/pipeline.yml:13: put logs in different paths & change artifact_paths so there's no duplicate logs
 

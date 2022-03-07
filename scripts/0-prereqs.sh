@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 source environment.sh
 
+dpkg --get-selections >> $LOGS/debian-builder-dpkg-selections.log
+cat /etc/apt/sources.list /etc/apt/sources.list.d/* >> $LOGS/debian-builder-apt-sources.log
+
+
 mkdir -pv /lfs/
 mkdir -pv /lfs/patches
 mkdir -pv /lfs/logs
