@@ -29,6 +29,11 @@ cd $LFS/sources/gcc* && mkdir build && cd build
 make -j$JOBS &> $LOGS/gcc.make.log
 make install &> $LOGS/gcc.install.log
 
+pwd
+find -name limitx.h
+find -name limity.h
+find -name glimits.h
+
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
 `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h || true
 
