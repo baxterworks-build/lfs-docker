@@ -3,11 +3,18 @@ steps:
     commands: 
       - "make debian-builder"
       - "make debian-builder.log"
-    artifact_paths: output/logs/gcc*
+    artifact_paths: output/logs/debian*
+
+  - label: "Build binutils"
+    commands: 
+      - "make binutils"
+      - "make binutils.log"
+    artifact_paths: output/logs/binutils*
+
   - label: "Build gcc"
     commands: 
       - "make gcc"
       - "make gcc.log"
-    artifact_paths: output/logs/*.log
+    artifact_paths: output/logs/gcc*
 
 #TODO: put logs in different paths & change artifact_paths so there's no duplicate logs
