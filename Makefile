@@ -42,4 +42,4 @@ todo:
 	echo >> README.md
 	echo "# todo" >> README.md
 	#https://stackoverflow.com/questions/15136366/how-to-use-non-capturing-groups-in-grep
-	grep --line-number --only-matching --perl-regexp --recursive '(?<=TODO:).+' scripts/  >> README.md
+	grep --line-number --only-matching --perl-regexp --recursive '(?<=#TODO:).+' scripts/ | sed 's/.*/\* &\n/'  >> README.md
