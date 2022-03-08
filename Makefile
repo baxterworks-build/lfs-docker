@@ -53,5 +53,7 @@ todo:
 	#https://stackoverflow.com/questions/15136366/how-to-use-non-capturing-groups-in-grep
 	grep --line-number --only-matching --perl-regexp --recursive '(?<=^#TODO:).+' scripts/ Makefile .buildkite/pipeline.yml | sed 's/.*/\* &\n/'  >> README.md
 
+sources: .sources.stamp
+
 save:
 	./scripts/99-save.sh

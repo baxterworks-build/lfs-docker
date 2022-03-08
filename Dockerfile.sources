@@ -1,0 +1,5 @@
+FROM debian:sid
+RUN mkdir -p /lfs/sources
+RUN apt update && apt -y install wget
+WORKDIR /lfs/sources
+RUN wget https://www.linuxfromscratch.org/lfs/downloads/development/wget-list && wget -i wget-list
