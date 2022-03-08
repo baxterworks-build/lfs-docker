@@ -20,7 +20,7 @@ endef
 word-dot = $(word $2,$(subst ., ,$1))
 
 .DEFAULT_GOAL = all
-.PHONY: clean todo %.log
+.PHONY: clean todo save %.log
 
 all: binutils gcc glibc
 
@@ -52,3 +52,6 @@ todo:
 	echo "# todo" >> README.md
 	#https://stackoverflow.com/questions/15136366/how-to-use-non-capturing-groups-in-grep
 	grep --line-number --only-matching --perl-regexp --recursive '(?<=^#TODO:).+' scripts/ Makefile .buildkite/pipeline.yml | sed 's/.*/\* &\n/'  >> README.md
+
+save:
+	./scripts/99-save.sh

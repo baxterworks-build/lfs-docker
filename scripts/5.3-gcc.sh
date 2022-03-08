@@ -26,7 +26,7 @@ cd $LFS/sources/gcc* && mkdir build && cd build
 
 
 
-make -j$JOBS &> $LOGS/gcc.make.log
+time make -j$JOBS &> $LOGS/gcc.make.log
 make install &> $LOGS/gcc.install.log
 
 #Create header specified at the bottom of this section of LFS
