@@ -1,13 +1,18 @@
 #!/bin/bash
 #https://www.linuxfromscratch.org/lfs/downloads/development/LFS-BOOK-r11.1-20-NOCHUNKS.html#ch-tools-glibc
 source environment.sh
-pushd $LFS/sources/glibc-*
+cd /lfs/sources
+mkdir -p /lfs/patches
+mv *.patch /lfs/patches #stops tar & cd getting confused when globbing
+tar axf glibc*.tar.xz && rm -v glibc*.tar.xz
+cd /lfs/sources/glibc-*
 
 #TODO: I assume uname -m returns aarch64 and breaks this switch on aarch64
 case $(uname -m) in
     i?86)   ln -sfv ld-linux.so.2 $LFS/lib/ld-lsb.so.3
     ;;
-    x86_64) ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64
+    x86_64) mkdir $LFS/lib64
+            ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64
             ln -sfv ../lib/ld-linux-x86-64.so.2 $LFS/lib64/ld-lsb-x86-64.so.3
     ;;
 esac
@@ -22,4 +27,6 @@ echo "rootsbindir=/usr/sbin" > configparms
       --build=$(../scripts/config.guess) \
       --enable-kernel=3.2                \
       --with-headers=$LFS/usr/include    \
-      libc_cv_slibdir=/usr/lib &> glibc.configure.log && make -j$(nproc) &> glibc.make.log && make install
+      libc_cv_slibdir=/usr/lib 
+      #&> glibc.configure.log 
+      #&& make -j$(nproc) &> glibc.make.log && make DESTDIR=$LFS install

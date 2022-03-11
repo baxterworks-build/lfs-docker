@@ -9,5 +9,5 @@ COPY scripts/0-prereqs.sh /lfs/
 #Yep, I'm installing bsdextrautils just for 'column'
 COPY --from=package_cache /var/cache /var/cache
 COPY --from=package_cache /var/lib/apt /var/lib/apt
-RUN apt -y install --no-install-recommends bsdextrautils xz-utils gcc g++ bison make curl ca-certificates patch less texinfo
+RUN apt -y install --no-install-recommends bsdextrautils xz-utils gcc g++ bison make curl ca-certificates patch less texinfo python3 gawk
 RUN ./0-prereqs.sh

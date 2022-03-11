@@ -3,4 +3,4 @@ FROM debian:sid
 RUN rm /etc/apt/apt.conf.d/docker-clean
 RUN apt update && apt upgrade -y --download-only
 RUN apt -y --download-only --no-install-recommends install \ 
-bsdextrautils xz-utils gcc g++ bison make curl ca-certificates patch less texinfo wget
+bsdextrautils xz-utils gcc g++ bison make curl ca-certificates patch less texinfo wget python3 gawk

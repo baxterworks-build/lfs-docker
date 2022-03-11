@@ -2,8 +2,8 @@
 source environment.sh
 #TODO: remove pushd/popd
 cd $LFS/sources
-#TODO: remove hardcoded version here, but globbing doesn't seem to work
-tar axf binutils-2.38.tar.xz && rm -v binutils*.tar.*
+
+tar axf binutils-*xz && rm -v binutils*.tar.*
 mkdir -p binutils-$BINUTILS_VERSION/build
 cd binutils-$BINUTILS_VERSION
 ls -la $LFS_PATCHES/binutils*

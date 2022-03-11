@@ -15,8 +15,16 @@ mv -v ../mpfr-* mpfr
 mv -v ../gmp-* gmp
 mv -v ../mpc-* mpc
 
+cd $LFS/sources/gcc* && mkdir build
+#TODO: another place that will need care for aarch64
+case $(uname -m) in
+  x86_64)
+    sed -e '/m64=/s/lib64/lib/' \
+        -i.orig gcc/config/i386/t-linux64
+ ;;
+esac
 
-cd $LFS/sources/gcc* && mkdir build && cd build
+cd build
 
 ../configure                                       \
     --target=$LFS_TGT                              \

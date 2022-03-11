@@ -1,9 +1,12 @@
 ARG PROJECT
 ARG PROJECT_ARCH
+
+FROM $PROJECT-$PROJECT_ARCH-sources as sources
 FROM $PROJECT-$PROJECT_ARCH-debian-builder
 ARG GNU=https://ftpmirror.gnu.org/
 ENV GNU=$GNU
 
+COPY --from=sources /lfs/sources/glibc* /lfs/sources/
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/
 COPY scripts/5.5-glibc.sh /lfs/
