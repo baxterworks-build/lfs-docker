@@ -1,6 +1,5 @@
 #!/bin/bash
 source environment.sh
-#TODO: remove pushd/popd
 cd $LFS/sources
 
 tar axf binutils-*xz && rm -v binutils*.tar.*

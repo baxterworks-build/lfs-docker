@@ -23,23 +23,29 @@ libstdcpp: /lfs/sources/gcc-11.2.0/build/include/fenv.h:58:11: error: 'fenv_t' h
 
 
 # todo
-* scripts/5.3-gcc.sh:5: move the sources to a different container? gcc is running me out of drive space after ~5 builds
+* .buildkite/pipeline.yml:20: put logs in different paths & change artifact_paths so there's no duplicate logs
 
-* scripts/5.3-gcc.sh:19: another place that will need care for aarch64
+* Dockerfile.bash:1: this is generic enough, can the copy and run commands be templated using an environment variable?
 
-* scripts/5.3-gcc.sh:60: remove hardcoded arch here
+* Makefile:58: exclude package-cache from clean?
 
-* scripts/5.2-binutils.sh:3: remove pushd/popd
+* Makefile:62: clear the todo section before creating it again
+
+* Makefile:72: accept an argument to save a single image instead of all of them
+
+* Makefile:76: look up how make rule parameters work, create a generic target that passes a $TARGET to the Dockerfile so that m4, ncurses and bash can be rolled into it
 
 * scripts/0-prereqs.sh:22: use the $LFS variable consistently, use absolute paths everywhere
 
+* scripts/5.3-gcc.sh:19: another place that will need care for aarch64
+
+* scripts/5.3-gcc.sh:5: move the sources to a different container? gcc is running me out of drive space after ~5 builds
+
+* scripts/5.3-gcc.sh:60: remove hardcoded arch here
+
 * scripts/5.5-glibc.sh:10: I assume uname -m returns aarch64 and breaks this switch on aarch64
 
-* scripts/5.6-libstdcpp.sh:25: /lfs/sources/gcc-11.2.0/build/include/fenv.h:58:11: error: 'fenv_t' has not been declared in '::'
+* scripts/5.6-libstdcpp.sh:23: /lfs/sources/gcc-11.2.0/build/include/fenv.h:58:11: error: 'fenv_t' has not been declared in '::'
 
-* Makefile:54: exclude package-cache from clean?
-
-* Makefile:67: accept an argument to save a single image instead of all of them
-
-* .buildkite/pipeline.yml:20: put logs in different paths & change artifact_paths so there's no duplicate logs
+* scripts/6.4.1-bash.sh:16: what have I missed that means $LFS/bin doesn't exist?
 

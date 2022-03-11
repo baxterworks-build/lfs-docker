@@ -59,15 +59,18 @@ get-logs: gcc .get-logs.stamp
 clean:
 	@rm -v $(wildcard .*.stamp)
 
+#TODO: clear the todo section before creating it again
 todo:
 	echo >> README.md
 	echo >> README.md
 	echo "# todo" >> README.md
 	#https://stackoverflow.com/questions/15136366/how-to-use-non-capturing-groups-in-grep
-	grep --line-number --only-matching --perl-regexp --recursive '(?<=^#TODO:).+' scripts/ Dockerfile.* Makefile .buildkite/pipeline.yml | sed 's/.*/\* &\n/'  >> README.md
+	grep --line-number --only-matching --perl-regexp --recursive '(?<=^#TODO:).+' scripts/ Dockerfile.* Makefile .buildkite/pipeline.yml | sort | sed 's/.*/\* &\n/'  >> README.md
 
 sources: .sources.stamp
 
 #TODO: accept an argument to save a single image instead of all of them
 export:
 	./scripts/99-export.sh
+
+#TODO: look up how make rule parameters work, create a generic target that passes a $TARGET to the Dockerfile so that m4, ncurses and bash can be rolled into it
