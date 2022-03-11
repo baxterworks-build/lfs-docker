@@ -1,3 +1,5 @@
+ARG PACKAGE_CACHE
+FROM $PACKAGE_CACHE as package_cache
 FROM debian:sid AS debian-builder
 ARG GNU=https://ftpmirror.gnu.org/
 ENV GNU=$GNU
@@ -5,5 +7,7 @@ WORKDIR /lfs
 COPY scripts/environment.sh /lfs/
 COPY scripts/0-prereqs.sh /lfs/
 #Yep, I'm installing bsdextrautils just for 'column'
-RUN apt update; apt -y install --no-install-recommends bsdextrautils xz-utils gcc g++ bison make curl ca-certificates patch less texinfo
+COPY --from=package_cache /var/cache /var/cache
+COPY --from=package_cache /var/lib/apt /var/lib/apt
+RUN apt -y install --no-install-recommends bsdextrautils xz-utils gcc g++ bison make curl ca-certificates patch less texinfo
 RUN ./0-prereqs.sh

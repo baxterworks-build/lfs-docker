@@ -1,9 +1,12 @@
 PROJECT = lfs
 PROJECT_ARCH = $(shell uname -m)
+PACKAGE_CACHE = $(PROJECT)-$(PROJECT_ARCH)-package-cache
+
 #if TAG is set, use it for the value of docker build . -t $TAG
 define DOCKER_BUILD
 docker build $\
 --build-arg PROJECT_ARCH=$(PROJECT_ARCH) $\
+--build-arg PACKAGE_CACHE=$(PACKAGE_CACHE) $\
 --build-arg PROJECT=$(PROJECT) -f Dockerfile.$1 $\
 -t $(if $(TAG),$(TAG),$(PROJECT)-$(PROJECT_ARCH)-$1) . 
 endef
@@ -32,7 +35,11 @@ all: binutils gcc glibc
 # %.log:
 # 	docker run --rm --mount type=bind,source=$(shell pwd)/output/,target=/output $(PROJECT)-$(PROJECT_ARCH)-$@ cp -Rv /lfs/logs/ /output
 
-debian-builder: .debian-builder.stamp
+test: .test.stamp
+
+package-cache: .package-cache.stamp
+
+debian-builder: package-cache .debian-builder.stamp
 
 binutils: debian-builder .binutils.stamp
 
@@ -42,7 +49,7 @@ glibc: gcc .glibc.stamp
 
 get-logs: gcc .get-logs.stamp
 	
-
+#TODO: exclude package-cache from clean?
 clean:
 	@rm -v $(wildcard .*.stamp)
 
@@ -55,5 +62,6 @@ todo:
 
 sources: .sources.stamp
 
-save:
-	./scripts/99-save.sh
+#TODO: accept an argument to save a single image instead of all of them
+export:
+	./scripts/99-export.sh

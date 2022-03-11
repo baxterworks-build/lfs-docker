@@ -1,14 +1,14 @@
 #!/bin/bash
 source environment.sh
 #TODO: remove pushd/popd
-pushd $LFS/sources
-mkdir binutils-$BINUTILS_VERSION/build
-pushd binutils-$BINUTILS_VERSION
+cd $LFS/sources
+#TODO: remove hardcoded version here, but globbing doesn't seem to work
+tar axf binutils-2.38.tar.xz && rm -v binutils*.tar.*
+mkdir -p binutils-$BINUTILS_VERSION/build
+cd binutils-$BINUTILS_VERSION
 ls -la $LFS_PATCHES/binutils*
 patch -p1 < $LFS_PATCHES/binutils*
-popd
-
-pushd binutils-$BINUTILS_VERSION/build
+cd build
 echo "1 SBU is?"
 
 time { 
@@ -17,7 +17,5 @@ time {
              --target=$LFS_TGT          \
              --disable-nls              \
              --disable-werror &> $LOGS/binutils.configure.log && ( make -j$(nproc) && make install ) &> $LOGS/binutils.make.log ; } || true
-popd
-popd
 
 sha256sum /lfs/tools/bin/* > $LOGS/binutils.sha256sum

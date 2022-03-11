@@ -1,6 +1,11 @@
 ARG PROJECT
 ARG PROJECT_ARCH
+
+FROM $PROJECT-$PROJECT_ARCH-sources AS sources
 FROM $PROJECT-$PROJECT_ARCH-debian-builder
+
+COPY --from=sources /lfs/sources/binutils-* /lfs/sources/
+
 ARG GNU=https://ftpmirror.gnu.org/
 ENV GNU=$GNU
 

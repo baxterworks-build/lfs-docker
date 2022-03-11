@@ -1,6 +1,21 @@
 #!/bin/bash
 #https://www.linuxfromscratch.org/lfs/view/development/chapter05/gcc-pass1.html
 source environment.sh
+
+#TODO: move the sources to a different container? gcc is running me out of drive space after ~5 builds
+cd /lfs/sources/
+tar axf gcc-*
+tar axf mpc-*
+tar axf mpfr-*
+tar axf gmp-*
+rm *.xz *.gz
+
+cd /lfs/sources/gcc-*
+mv -v ../mpfr-* mpfr
+mv -v ../gmp-* gmp
+mv -v ../mpc-* mpc
+
+
 cd $LFS/sources/gcc* && mkdir build && cd build
 
 ../configure                                       \
@@ -34,6 +49,9 @@ cd $LFS/sources/gcc*
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
 `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h || true
 
+#TODO: remove hardcoded arch here
 sha256sum /lfs/tools/bin/x86_64-lfs-linux-gnu-{gcc*,g++*,c++*} > $LOGS/gcc.sha256sum
 
+cd /
+rm -rf /lfs/sources/*
 

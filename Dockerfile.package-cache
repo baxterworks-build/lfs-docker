@@ -1,0 +1,6 @@
+FROM debian:sid
+#We don't want the deb files and lists to get removed as they are by default
+RUN rm /etc/apt/apt.conf.d/docker-clean
+RUN apt update && apt upgrade -y --download-only
+RUN apt -y --download-only --no-install-recommends install \ 
+bsdextrautils xz-utils gcc g++ bison make curl ca-certificates patch less texinfo wget

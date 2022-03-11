@@ -17,6 +17,8 @@ buildkite:  Error: Failed to remove "/var/lib/buildkite-agent/builds/debian-1/ba
 
 docker on btrfs: failing on copy step, "solved" by changing VM back to ext4 with overlay driver... revisit this as it's a bad solution. Perhaps something changed in kernel 5.17? https://github.com/moby/moby/issues/37965
 
+docker import/export is not docker load/save: https://pspdfkit.com/blog/2019/docker-import-export-vs-load-save/
+
 # todo
 * scripts/5.2-binutils.sh:3: remove pushd/popd
 

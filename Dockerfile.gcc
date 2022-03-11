@@ -2,8 +2,15 @@ ARG PROJECT
 ARG PROJECT_ARCH
 
 FROM $PROJECT-$PROJECT_ARCH-binutils as binutils
+FROM $PROJECT-$PROJECT_ARCH-sources as sources
 FROM $PROJECT-$PROJECT_ARCH-debian-builder
+
 COPY --from=binutils /lfs/tools /lfs/tools
+COPY --from=sources /lfs/sources/gcc* /lfs/sources/
+COPY --from=sources /lfs/sources/gmp* /lfs/sources/
+COPY --from=sources /lfs/sources/mpc* /lfs/sources/
+COPY --from=sources /lfs/sources/mpfr* /lfs/sources/
+COPY --from=sources /lfs/sources/gcc* /lfs/sources/
 
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/
