@@ -35,8 +35,6 @@ all: binutils gcc glibc
 # %.log:
 # 	docker run --rm --mount type=bind,source=$(shell pwd)/output/,target=/output $(PROJECT)-$(PROJECT_ARCH)-$@ cp -Rv /lfs/logs/ /output
 
-test: .test.stamp
-
 package-cache: .package-cache.stamp
 
 debian-builder: package-cache .debian-builder.stamp
@@ -48,6 +46,8 @@ gcc: binutils .gcc.stamp
 libstdcpp: .libstdcpp.stamp
 
 glibc: gcc .glibc.stamp
+
+m4: .m4.stamp
 
 get-logs: gcc .get-logs.stamp
 	
