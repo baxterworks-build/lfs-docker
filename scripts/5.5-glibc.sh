@@ -27,6 +27,7 @@ echo "rootsbindir=/usr/sbin" > configparms
       --build=$(../scripts/config.guess) \
       --enable-kernel=3.2                \
       --with-headers=$LFS/usr/include    \
-      libc_cv_slibdir=/usr/lib 
-      #&> glibc.configure.log 
-      #&& make -j$(nproc) &> glibc.make.log && make DESTDIR=$LFS install
+      libc_cv_slibdir=/usr/lib &> glibc.configure.log && make -j$(nproc) &> glibc.make.log && make DESTDIR=$LFS install
+
+sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
+$LFS/tools/libexec/gcc/$LFS_TGT/11.2.0/install-tools/mkheaders

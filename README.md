@@ -19,14 +19,27 @@ docker on btrfs: failing on copy step, "solved" by changing VM back to ext4 with
 
 docker import/export is not docker load/save: https://pspdfkit.com/blog/2019/docker-import-export-vs-load-save/
 
+libstdcpp: /lfs/sources/gcc-11.2.0/build/include/fenv.h:58:11: error: 'fenv_t' has not been declared in '::'
+
+
 # todo
+* scripts/5.3-gcc.sh:5: move the sources to a different container? gcc is running me out of drive space after ~5 builds
+
+* scripts/5.3-gcc.sh:19: another place that will need care for aarch64
+
+* scripts/5.3-gcc.sh:60: remove hardcoded arch here
+
 * scripts/5.2-binutils.sh:3: remove pushd/popd
 
-* scripts/0-prereqs.sh:25: move the sources to a different container? gcc is running me out of drive space after ~5 builds
+* scripts/0-prereqs.sh:22: use the $LFS variable consistently, use absolute paths everywhere
 
-* scripts/0-prereqs.sh:33: use the $LFS variable consistently, use absolute paths everywhere
+* scripts/5.5-glibc.sh:10: I assume uname -m returns aarch64 and breaks this switch on aarch64
 
-* scripts/5.5-glibc.sh:6: I assume uname -m returns aarch64 and breaks this switch on aarch64
+* scripts/5.6-libstdcpp.sh:25: /lfs/sources/gcc-11.2.0/build/include/fenv.h:58:11: error: 'fenv_t' has not been declared in '::'
 
-* .buildkite/pipeline.yml:13: put logs in different paths & change artifact_paths so there's no duplicate logs
+* Makefile:54: exclude package-cache from clean?
+
+* Makefile:67: accept an argument to save a single image instead of all of them
+
+* .buildkite/pipeline.yml:20: put logs in different paths & change artifact_paths so there's no duplicate logs
 

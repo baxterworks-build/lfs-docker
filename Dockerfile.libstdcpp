@@ -1,0 +1,14 @@
+ARG PROJECT
+ARG PROJECT_ARCH
+
+FROM $PROJECT-$PROJECT_ARCH-binutils as binutils
+FROM $PROJECT-$PROJECT_ARCH-sources as sources
+FROM $PROJECT-$PROJECT_ARCH-debian-builder
+
+COPY --from=binutils /lfs/tools /lfs/tools
+COPY --from=sources /lfs/sources/gcc* /lfs/sources/
+
+WORKDIR /lfs
+COPY scripts/environment.sh /lfs/
+COPY scripts/5.6-libstdcpp.sh /lfs/
+RUN ./5.6-libstdcpp.sh
