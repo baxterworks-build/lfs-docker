@@ -18,7 +18,7 @@ cd build
     --disable-libstdcxx-pch         \
     --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/11.2.0 
     #&> $LOGS/libstdcpp.configure.log
-make -j$(nproc) #&> $LOGS/libstdcpp.make.log
+make -j$JOBS #&> $LOGS/libstdcpp.make.log
 
 #TODO: /lfs/sources/gcc-11.2.0/build/include/fenv.h:58:11: error: 'fenv_t' has not been declared in '::'
 exit 1

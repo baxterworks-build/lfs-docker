@@ -6,10 +6,6 @@ FROM $PROJECT-$PROJECT_ARCH-debian-builder
 
 COPY --from=sources /lfs/sources/binutils-* /lfs/sources/
 
-ARG GNU=https://ftpmirror.gnu.org/
-ENV GNU=$GNU
-
-
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/
 COPY scripts/5.2-binutils.sh /lfs/

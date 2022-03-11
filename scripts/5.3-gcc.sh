@@ -55,7 +55,7 @@ make install &> $LOGS/gcc.install.log
 #Create header specified at the bottom of this section of LFS
 cd $LFS/sources/gcc*
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
-`dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h || true
+`dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
 
 #TODO: remove hardcoded arch here
 sha256sum /lfs/tools/bin/x86_64-lfs-linux-gnu-{gcc*,g++*,c++*} > $LOGS/gcc.sha256sum

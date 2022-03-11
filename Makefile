@@ -49,6 +49,8 @@ glibc: gcc .glibc.stamp
 
 m4: .m4.stamp
 
+ncurses: .ncurses.stamp
+
 get-logs: gcc .get-logs.stamp
 	
 #TODO: exclude package-cache from clean?

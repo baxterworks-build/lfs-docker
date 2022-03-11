@@ -16,6 +16,6 @@ time {
              --with-sysroot=$LFS        \
              --target=$LFS_TGT          \
              --disable-nls              \
-             --disable-werror &> $LOGS/binutils.configure.log && ( make -j$(nproc) && make install ) &> $LOGS/binutils.make.log ; } || true
+             --disable-werror &> $LOGS/binutils.configure.log && ( make -j$JOBS && make install ) &> $LOGS/binutils.make.log ; } || true
 
 sha256sum /lfs/tools/bin/* > $LOGS/binutils.sha256sum
