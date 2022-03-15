@@ -1,5 +1,6 @@
 image: debian
 packages:
   - make
-tasks: | 
-make debian-builder
+tasks: 
+ - build: |
+    make debian-builder
