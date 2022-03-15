@@ -6,4 +6,4 @@ sources:
 - https://github.com/baxterworks-build/lfs-docker
 tasks: 
 - build: |
-  make debian-builder
+      make debian-builder
