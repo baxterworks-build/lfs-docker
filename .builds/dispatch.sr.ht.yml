@@ -1,0 +1,6 @@
+image: debian
+#sources: 
+packages:
+  - make
+tasks: | 
+make debian-builder
