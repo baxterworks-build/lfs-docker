@@ -1,6 +1,7 @@
-image: debian
+image: alpine
 packages:
   - make
+  - docker
 tasks: 
  - build: |
     make debian-builder
