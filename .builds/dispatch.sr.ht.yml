@@ -2,6 +2,8 @@ image: alpine/edge
 packages:
   - make
   - docker
+sources:
+  - https://github.com/baxterworks-build/lfs-docker
 tasks: 
- - build: |
+  - build: |
     make debian-builder
