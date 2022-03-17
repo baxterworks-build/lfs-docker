@@ -4,6 +4,20 @@ source environment.sh
 cd /lfs/sources
 mkdir -p /lfs/patches
 mv *.patch /lfs/patches #stops tar & cd getting confused when globbing
+
+#Section 5.4 Linux Headers
+tar axf linux-*.tar.xz && rm -v linux-*.tar.xz
+cd linux-*
+make headers
+find usr/include -name '.*' -delete
+rm usr/include/Makefile
+#TODO: this copies to $LFS/usr, no trailing slash in the instructions, is that right? Why do I need to do this differently
+mkdir -p $LFS/usr/include
+cp -rv usr/include/* $LFS/usr/include
+
+cd /lfs/sources
+rm -rf linux-*
+
 tar axf glibc*.tar.xz && rm -v glibc*.tar.xz
 cd /lfs/sources/glibc-*
 
@@ -20,6 +34,7 @@ esac
 patch -Np1 -i $LFS/patches/glibc-2.35-fhs-1.patch
 mkdir -v build && cd build
 
+
 echo "rootsbindir=/usr/sbin" > configparms
 ../configure                             \
       --prefix=/usr                      \
@@ -27,7 +42,7 @@ echo "rootsbindir=/usr/sbin" > configparms
       --build=$(../scripts/config.guess) \
       --enable-kernel=3.2                \
       --with-headers=$LFS/usr/include    \
-      libc_cv_slibdir=/usr/lib &> glibc.configure.log && make -j$JOBS &> glibc.make.log && make DESTDIR=$LFS install
+      libc_cv_slibdir=/usr/lib &> $LOGS/glibc.configure.log && make -j$JOBS &> $LOGS/glibc.make.log && make DESTDIR=$LFS install
 
 sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
 $LFS/tools/libexec/gcc/$LFS_TGT/11.2.0/install-tools/mkheaders
