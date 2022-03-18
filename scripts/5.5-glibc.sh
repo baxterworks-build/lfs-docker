@@ -46,3 +46,7 @@ echo "rootsbindir=/usr/sbin" > configparms
 
 sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
 $LFS/tools/libexec/gcc/$LFS_TGT/11.2.0/install-tools/mkheaders
+
+rm -rf /lfs/sources/*
+#TODO: shasum any binaries?
+find /lfs > $LOGS/glibc.contents.log

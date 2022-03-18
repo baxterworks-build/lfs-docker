@@ -1,10 +1,16 @@
 ARG PROJECT
 ARG PROJECT_ARCH
 
-FROM $PROJECT-$PROJECT_ARCH-sources AS sources
+FROM $PROJECT-$PROJECT_ARCH-sources as sources
+FROM $PROJECT-$PROJECT_ARCH-glibc as glibc
+FROM $PROJECT-$PROJECT_ARCH-libstdcpp as libstdcpp
 FROM $PROJECT-$PROJECT_ARCH-debian-builder
 
 COPY --from=sources /lfs/sources/ncurses-* /lfs/sources/
+COPY --from=glibc /lfs/tools /lfs/tools
+COPY --from=glibc /lfs/usr /lfs/usr
+COPY --from=libstdcpp /lfs/tools /lfs/tools
+COPY --from=libstdcpp /lfs/usr /lfs/usr
 
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/

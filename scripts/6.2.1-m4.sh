@@ -8,3 +8,6 @@ cd m4*
             --host=$LFS_TGT \
             --build=$(build-aux/config.guess) &> $LOGS/m4.configure.log
 make DESTDIR=$LFS install &> $LOGS/m4.make.log
+
+rm -rf /lfs/sources/*
+find /lfs > $LOGS/m4.contents.log

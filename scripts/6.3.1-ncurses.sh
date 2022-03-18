@@ -8,11 +8,12 @@ cd ncurses-*
 sed -i s/mawk// configure
 
 mkdir build
-pushd build
-  ../configure
-  make -C include
-  make -C progs tic
-popd
+cd build
+  ../configure &> $LOGS/ncurses.host.configure.log
+  make -C include &> $LOGS/ncurses.host.include.log
+  make -C progs tic &> $LOGS/ncurses.host.progs.log
+
+cd ..
 
 ./configure --prefix=/usr                \
             --host=$LFS_TGT              \
@@ -25,8 +26,11 @@ popd
             --without-normal             \
             --disable-stripping          \
             --enable-widec &> $LOGS/ncurses.configure.log
+
 make -j$JOBS &> $LOGS/ncurses.make.log
 
-make DESTDIR=$LFS TIC_PATH=$(pwd)/build/progs/tic install
+make DESTDIR=$LFS TIC_PATH=$(pwd)/build/progs/tic install &> $LOGS/ncurses.tic.log
+
 echo "INPUT(-lncursesw)" > $LFS/usr/lib/libncurses.so
 
+find /lfs > $LOGS/ncurses.contents.log

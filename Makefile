@@ -15,25 +15,28 @@ define GRAB_LOG
 	docker run --rm --mount type=bind,source=$(shell pwd)/output/,target=/output $(PROJECT)-$(PROJECT_ARCH)-$1 cp -Rv /lfs/logs/ /output
 endef
 
+define RUN
+	docker run -it $(PROJECT)-$(PROJECT_ARCH)-$1
+endef
+
 %.log:
 	$(call GRAB_LOG,$*,1)
-#docker run --rm --mount type=bind,source=$(shell pwd)/output/,target=/output $(PROJECT)-$(PROJECT_ARCH)-$1 cp -Rv /lfs/logs/ /output
+
+run-%:
+	$(call RUN,$*,1)
 
 #https://stackoverflow.com/a/39124162/229631
 word-dot = $(word $2,$(subst ., ,$1))
 
 .DEFAULT_GOAL = all
-.PHONY: clean todo save %.log
+.PHONY: clean todo save %.log run-%
 
-all: binutils gcc glibc
+all: binutils gcc libstdcpp glibc m4
 
 #https://stackoverflow.com/a/8822668/229631
 .%.stamp:
 	$(call DOCKER_BUILD,$(call word-dot,$*,1))
 	touch $@
-
-# %.log:
-# 	docker run --rm --mount type=bind,source=$(shell pwd)/output/,target=/output $(PROJECT)-$(PROJECT_ARCH)-$@ cp -Rv /lfs/logs/ /output
 
 package-cache: .package-cache.stamp
 
@@ -74,3 +77,4 @@ export:
 	./scripts/99-export.sh
 
 #TODO: look up how make rule parameters work, create a generic target that passes a $TARGET to the Dockerfile so that m4, ncurses and bash can be rolled into it
+

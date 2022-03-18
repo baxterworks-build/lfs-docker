@@ -1,3 +1,4 @@
 Dockerfile
 buildme.sh
 output/
+.stamp

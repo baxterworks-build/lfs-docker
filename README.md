@@ -19,8 +19,13 @@ docker on btrfs: failing on copy step, "solved" by changing VM back to ext4 with
 
 docker import/export is not docker load/save: https://pspdfkit.com/blog/2019/docker-import-export-vs-load-save/
 
-libstdcpp: /lfs/sources/gcc-11.2.0/build/include/fenv.h:58:11: error: 'fenv_t' has not been declared in '::'
+libstdcpp: `/lfs/sources/gcc-11.2.0/build/include/fenv.h:58:11: error: 'fenv_t' has not been declared in '::'` - this was fixed by copying /lfs/tools from the gcc image, but then this caused `../libstdc++-v3/configure: line 7738: /usr/bin/file: No such file or directory`. Added file to debian-builder/package-cache
 
+libstdcpp: `configure: error: Link tests are not allowed after GCC_NO_EXECUTABLES.` - https://stackoverflow.com/questions/46487529/crosscompiling-gcc-link-tests-are-not-allowed-after-gcc-no-executables-when-che suggests glibc was missing
+
+ncurses: `/lfs/tools/lib/gcc/x86_64-lfs-linux-gnu/11.2.0/../../../../x86_64-lfs-linux-gnu/bin/ld: cannot find crt1.o: No such file or directory` - needed to bring the glibc /lfs/usr tree across
+
+ncurses: missing iostream and `/lfs/tools/lib/gcc/x86_64-lfs-linux-gnu/11.2.0/../../../../x86_64-lfs-linux-gnu/bin/ld: cannot find -lstdc++: No such file or directory` - need libstdc++ /lfs tree
 
 # todo
 * .buildkite/pipeline.yml:20: put logs in different paths & change artifact_paths so there's no duplicate logs
