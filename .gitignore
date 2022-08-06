@@ -2,3 +2,4 @@ output/
 exported/
 *.log
 *.stamp
+.vscode/settings.json

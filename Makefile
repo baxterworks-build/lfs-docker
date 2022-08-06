@@ -62,13 +62,11 @@ get-logs: gcc .get-logs.stamp
 clean:
 	@rm -v $(wildcard .*.stamp)
 
-#TODO: clear the todo section before creating it again
 todo:
-	echo >> README.md
-	echo >> README.md
+	sed -i $$(grep -n "# todo" README.md | cut -d ':' -f1),\$$d README.md
 	echo "# todo" >> README.md
 	#https://stackoverflow.com/questions/15136366/how-to-use-non-capturing-groups-in-grep
-	grep --line-number --only-matching --perl-regexp --recursive '(?<=^#TODO:).+' scripts/ Dockerfile.* Makefile .buildkite/pipeline.yml | sort | sed 's/.*/\* &\n/'  >> README.md
+	grep --line-number --only-matching --perl-regexp --recursive '(?<=^#TODO:).+' scripts/ Dockerfile.* Makefile | sort | sed 's/.*/\* &\n/'  >> README.md
 
 sources: .sources.stamp
 

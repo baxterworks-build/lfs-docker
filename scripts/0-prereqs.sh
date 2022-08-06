@@ -2,6 +2,7 @@
 source environment.sh
 
 mkdir -pv /lfs/
+#TODO: update patches from https://www.linuxfromscratch.org/lfs/downloads/development/LFS-BOOK-r11.1-154-NOCHUNKS.html#ch-materials-patches
 mkdir -pv /lfs/patches
 mkdir -pv /lfs/logs
 mkdir -pv /lfs/sources
