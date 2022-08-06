@@ -12,8 +12,10 @@ mkdir -pv /lfs/sources
 #https://unix.stackexchange.com/questions/20536/reformatting-output-with-aligned-columns
 #tl;dr don't use dpkg --get-selections, use dpkg-query
 dpkg-query -W -f='${binary:Package}\t${Version}\n' | column -t > $LOGS/debian-packages.log
-cat /etc/apt/sources.list >> $LOGS/debian-builder-apt-sources.log 
-#cat /etc/apt/sources.list.d/* >> $LOGS/debian-builder-apt-sources.log || true 
+
+#Debian's changed, man.
+#cat /etc/apt/sources.list >> $LOGS/debian-builder-apt-sources.log
+cat /etc/apt/sources.list.d/* >> $LOGS/debian-builder-apt-sources.log || true 
 
 cd /lfs/sources
 

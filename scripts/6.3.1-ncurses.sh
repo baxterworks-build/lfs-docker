@@ -9,9 +9,9 @@ sed -i s/mawk// configure
 
 mkdir build
 cd build
-  ../configure &> $LOGS/ncurses.host.configure.log
-  make -C include &> $LOGS/ncurses.host.include.log
-  make -C progs tic &> $LOGS/ncurses.host.progs.log
+  ../configure 2>&1 | tee $LOGS/ncurses.host.configure.log
+  make -C include 2>&1 | tee $LOGS/ncurses.host.include.log
+  make -C progs tic 2>&1 | tee $LOGS/ncurses.host.progs.log
 
 cd ..
 
@@ -21,11 +21,12 @@ cd ..
             --mandir=/usr/share/man      \
             --with-manpage-format=normal \
             --with-shared                \
+            --without-normal             \
+            --with-cxx-shared            \
             --without-debug              \
             --without-ada                \
-            --without-normal             \
             --disable-stripping          \
-            --enable-widec &> $LOGS/ncurses.configure.log
+            --enable-widec 2>&1 | tee $LOGS/ncurses.configure.log
 
 make -j$JOBS &> $LOGS/ncurses.make.log
 

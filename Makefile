@@ -11,6 +11,7 @@ docker build $\
 -t $(if $(TAG),$(TAG),$(PROJECT)-$(PROJECT_ARCH)-$1) . 
 endef
 
+#TODO: is there a better way to grab logs when a Dockerfile fails to build?
 define GRAB_LOG
 	docker run --rm --mount type=bind,source=$(shell pwd)/output/,target=/output $(PROJECT)-$(PROJECT_ARCH)-$1 cp -Rv /lfs/logs/ /output
 endef
@@ -31,14 +32,14 @@ word-dot = $(word $2,$(subst ., ,$1))
 .DEFAULT_GOAL = all
 .PHONY: clean todo save %.log run-%
 
-all: binutils gcc libstdcpp glibc m4
+all: binutils gcc libstdcpp glibc m4 ncurses bash get-logs
 
 #https://stackoverflow.com/a/8822668/229631
 .%.stamp:
 	$(call DOCKER_BUILD,$(call word-dot,$*,1))
 	touch $@
 
-package-cache: .package-cache.stamp
+package-cache: sources .package-cache.stamp
 
 debian-builder: package-cache .debian-builder.stamp
 
@@ -46,18 +47,16 @@ binutils: debian-builder .binutils.stamp
 
 gcc: binutils .gcc.stamp
 
-libstdcpp: .libstdcpp.stamp
-
 glibc: gcc .glibc.stamp
+
+libstdcpp: glibc binutils .libstdcpp.stamp
 
 m4: .m4.stamp
 
-ncurses: .ncurses.stamp
+ncurses: libstdcpp .ncurses.stamp
 
 bash: .bash.stamp
 
-get-logs: gcc .get-logs.stamp
-	
 #TODO: exclude package-cache from clean?
 clean:
 	@rm -v $(wildcard .*.stamp)

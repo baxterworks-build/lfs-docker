@@ -15,7 +15,7 @@ cd build
     --disable-multilib              \
     --disable-nls                   \
     --disable-libstdcxx-pch         \
-    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/11.2.0 &> $LOGS/libstdcpp.configure.log
+    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/$GCC_VERSION &> $LOGS/libstdcpp.configure.log
 
 make -j$JOBS &> $LOGS/libstdcpp.make.log
 make DESTDIR=$LFS install &> $LOGS/libstdcpp.install.log

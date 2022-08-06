@@ -14,5 +14,6 @@ COPY --from=glibc /lfs/tools /lfs/tools
 COPY --from=glibc /lfs/usr /lfs/usr
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/
+RUN echo cache bust... sigh. Docker is definitely the right tool for this. Yep.
 COPY scripts/5.6-libstdcpp.sh /lfs/
 RUN ./5.6-libstdcpp.sh
