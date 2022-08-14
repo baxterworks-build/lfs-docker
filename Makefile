@@ -4,6 +4,7 @@ PACKAGE_CACHE = $(PROJECT)-$(PROJECT_ARCH)-package-cache
 
 #if TAG is set, use it for the value of docker build . -t $TAG
 define DOCKER_BUILD
+docker rmi $(PROJECT)-$(PROJECT_ARCH)-$1 || true
 docker build $\
 --build-arg PROJECT_ARCH=$(PROJECT_ARCH) $\
 --build-arg PACKAGE_CACHE=$(PACKAGE_CACHE) $\

@@ -4,13 +4,13 @@ source environment.sh
 
 #TODO: move the sources to a different container? gcc is running me out of drive space after ~5 builds
 cd /lfs/sources/
-tar axf gcc-*
+tar axf gcc-$GCC_VERSION.tar.xz
 tar axf mpc-*
 tar axf mpfr-*
 tar axf gmp-*
 rm *.xz *.gz
 
-cd /lfs/sources/gcc-*
+cd /lfs/sources/gcc-$GCC_VERSION
 mv -v ../mpfr-* mpfr
 mv -v ../gmp-* gmp
 mv -v ../mpc-* mpc
