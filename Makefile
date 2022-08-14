@@ -30,7 +30,7 @@ run-%:
 word-dot = $(word $2,$(subst ., ,$1))
 
 .DEFAULT_GOAL = all
-.PHONY: clean todo save %.log run-%
+.PHONY: clean todo save %.log run-% update-patches
 
 all: binutils gcc libstdcpp glibc m4 ncurses bash get-logs
 
@@ -75,3 +75,9 @@ export:
 
 #TODO: look up how make rule parameters work, create a generic target that passes a $TARGET to the Dockerfile so that m4, ncurses and bash can be rolled into it
 
+#TODO: why doesn't tag work here, also needs to be fixed to be multiline again
+update-patches: .sources.stamp
+	rm -v patches/*.patch || true
+	DOCKER_BUILDKIT=1 docker build --build-arg PROJECT_ARCH=$(PROJECT_ARCH) --build-arg PACKAGE_CACHE=$(PACKAGE_CACHE) --build-arg PROJECT=$(PROJECT) -f Dockerfile.update-patches . --output=./output
+	cp -v output/*.patch ./patches/
+	git status

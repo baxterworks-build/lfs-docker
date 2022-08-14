@@ -1,5 +1,8 @@
 FROM debian:sid
+
 RUN mkdir -p /lfs/sources
-RUN apt update && apt -y install wget
+RUN apt update && apt -y install aria2
 WORKDIR /lfs/sources
-RUN wget https://www.linuxfromscratch.org/lfs/downloads/development/wget-list && wget -i wget-list
+RUN aria2c https://www.linuxfromscratch.org/lfs/downloads/development/wget-list
+RUN aria2c -i wget-list
+#TODO: check sha256sum of list / etag and flag if updated

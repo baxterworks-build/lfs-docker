@@ -1,0 +1,6 @@
+ARG PROJECT
+ARG PROJECT_ARCH
+
+FROM $PROJECT-$PROJECT_ARCH-sources as sources
+FROM scratch as export
+COPY --from=sources /lfs/sources/*.patch .

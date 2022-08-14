@@ -1,6 +1,6 @@
 # LFS in a docker container
 
-Based on https://www.linuxfromscratch.org/lfs/downloads/development/LFS-BOOK-r11.1-154-NOCHUNKS.html, which is `32feb4ba2` in git://git.linuxfromscratch.org/lfs
+Based on https://www.linuxfromscratch.org/lfs/downloads/development/LFS-BOOK-r11.1-166-NOCHUNKS.html#ch-intro-changelog
 
 # Modifications
 * Downloading and extracting as much of the sources as possible up-front, so I'm not having to do repetitive curl | tar steps in every container
