@@ -1,12 +1,13 @@
 #!/bin/bash
 source environment.sh
+#TODO: use functions in environment.sh to check if patch is required
 cd $LFS/sources
 
 tar axf binutils-*xz && rm -v binutils*.tar.*
 mkdir -p binutils-$BINUTILS_VERSION/build
-cd binutils-$BINUTILS_VERSION
-ls -la $LFS_PATCHES/binutils*
-patch -p1 < $LFS_PATCHES/binutils*
+pushd binutils-$BINUTILS_VERSION
+#ls -la $LFS_PATCHES/binutils*
+#patch -p1 < $LFS_PATCHES/binutils*
 cd build
 echo "1 SBU is?"
 
@@ -15,7 +16,8 @@ time {
              --with-sysroot=$LFS        \
              --target=$LFS_TGT          \
              --disable-nls              \
-             --disable-werror &> $LOGS/binutils.configure.log && ( make -j$JOBS && make install ) &> $LOGS/binutils.make.log ; } || true
+             --disable-werror \
+	&> $LOGS/binutils.configure.log && ( make -j$JOBS && make install ) &> $LOGS/binutils.make.log ; } || true
 
 #TODO: can cleanup / checksum / contents be generalised into a post-install script that's shared between all targets?
 rm -rf /lfs/sources/*

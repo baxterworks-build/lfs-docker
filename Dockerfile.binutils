@@ -9,5 +9,4 @@ COPY --from=sources /lfs/sources/binutils-* /lfs/sources/
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/
 COPY scripts/5.2-binutils.sh /lfs/
-COPY patches/binutils* /lfs/patches/
 RUN ./5.2-binutils.sh

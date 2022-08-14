@@ -11,7 +11,7 @@ export LOGS=${LOGS:-$LFS/logs}
 
 
 #TODO: How does Automated Linux From Scratch do this?
-export BINUTILS_VERSION=2.38
+export BINUTILS_VERSION=2.39
 export GCC_VERSION=12.1.0
 export GLIBC_VERSION=2.35
 export GMP_VERSION=6.2.1
