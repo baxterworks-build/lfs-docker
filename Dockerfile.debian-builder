@@ -2,6 +2,9 @@ ARG PACKAGE_CACHE
 FROM $PACKAGE_CACHE as package_cache
 FROM debian:sid AS debian-builder
 
+ARG PROJECT_ARCH
+ENV PROJECT_ARCH=${PROJECT_ARCH}
+
 WORKDIR /lfs
 COPY scripts/environment.sh /lfs/
 COPY scripts/0-prereqs.sh /lfs/

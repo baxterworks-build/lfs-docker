@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -eou pipefail
 set +h
+
+: "$PROJECT_ARCH"
+
 export JOBS=${JOBS:-$(nproc)}
 export LFS=${LFS:-/lfs}
 export PATH=$LFS/tools/bin:/bin:/usr/bin
@@ -13,7 +16,7 @@ export LOGS=${LOGS:-$LFS/logs}
 #TODO: How does Automated Linux From Scratch do this?
 export BINUTILS_VERSION=2.39
 export GCC_VERSION=12.1.0
-export GLIBC_VERSION=2.35
+export GLIBC_VERSION=2.36
 export GMP_VERSION=6.2.1
 export KERNEL_VERSION=5.18.14
 export MPC_VERSION=1.2.1

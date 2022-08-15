@@ -5,7 +5,7 @@ PACKAGE_CACHE = $(PROJECT)-$(PROJECT_ARCH)-package-cache
 #if TAG is set, use it for the value of docker build . -t $TAG
 define DOCKER_BUILD
 docker rmi $(PROJECT)-$(PROJECT_ARCH)-$1 || true
-docker build $\
+DOCKER_BUILDKIT=1 docker build $\
 --build-arg PROJECT_ARCH=$(PROJECT_ARCH) $\
 --build-arg PACKAGE_CACHE=$(PACKAGE_CACHE) $\
 --build-arg PROJECT=$(PROJECT) -f Dockerfile.$1 $\
@@ -33,7 +33,7 @@ word-dot = $(word $2,$(subst ., ,$1))
 .DEFAULT_GOAL = all
 .PHONY: clean todo save %.log run-% update-patches
 
-all: binutils gcc libstdcpp glibc m4 ncurses bash get-logs
+all: binutils gcc libstdcpp glibc m4 ncurses bash
 
 #https://stackoverflow.com/a/8822668/229631
 .%.stamp:

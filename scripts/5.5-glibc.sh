@@ -31,7 +31,7 @@ case $(uname -m) in
     ;;
 esac
 
-patch -Np1 -i $LFS/patches/glibc-2.35-fhs-1.patch
+patch -Np1 -i $LFS/patches/glibc-$GLIBC_VERSION*.patch
 mkdir -v build && cd build
 
 

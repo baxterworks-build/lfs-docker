@@ -1,11 +1,10 @@
 #!/bin/bash
 source environment.sh
 cd /lfs/sources/
-tar axf gcc-*
+tar axf gcc-$GCC_VERSION.tar.xz
 rm *.xz
 
-cd /lfs/sources/gcc-*
-cd $LFS/sources/gcc* && mkdir build
+cd $LFS/sources/gcc-$GCC_VERSION && mkdir build
 cd build
 
 ../libstdc++-v3/configure           \
